@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { AuthController } from "../controllers/auth.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 
@@ -6,7 +6,7 @@ export class AuthRouter {
   _authController;
 
   constructor(app) {
-    const router = express.Router();
+    const router = Router();
     this._authController = new AuthController();
     // /**
     //  * @swagger
@@ -22,7 +22,7 @@ export class AuthRouter {
   }
 
   #configureRoutes(router) {
-    const authRouter = express.Router();
+    const authRouter = Router();
     /**
      * @swagger
      * /auth/signup:

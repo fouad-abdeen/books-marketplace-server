@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { getService } from "../core/config/container.config.js";
 import { UserController } from "../controllers/user.controller.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
@@ -8,7 +8,7 @@ export class UserRouter {
   _userController;
 
   constructor(app) {
-    const router = express.Router();
+    const router = Router();
     this._userController = getService("userController", UserController);
     this.#configureRoutes(router);
 
@@ -55,7 +55,7 @@ export class UserRouter {
   }
 
   #configureRoutes(router) {
-    const userRouter = express.Router();
+    const userRouter = Router();
 
     /**
      * @swagger

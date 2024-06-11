@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { getService } from "../core/config/container.config.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { bookstoreMiddleware } from "../middlewares/bookstore.middleware.js";
@@ -9,14 +9,14 @@ export class GenreRouter {
   _genreController;
 
   constructor(app) {
-    const router = express.Router();
+    const router = Router();
     this._genreController = getService("genreController", GenreController);
     this.#configureRoutes(router);
     app.use("/genres", router);
   }
 
   #configureRoutes(router) {
-    const genreRouter = express.Router();
+    const genreRouter = Router();
 
     genreRouter.post(
       "/",

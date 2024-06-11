@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import { Schema } from "mongoose";
 import { userRole } from "../shared/enums.js";
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     email: { type: String, required: true, lowercase: true, unique: true },
     password: { type: String, required: true },

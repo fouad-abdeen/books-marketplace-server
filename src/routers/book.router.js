@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { getService } from "../core/config/container.config.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { bookstoreMiddleware } from "../middlewares/bookstore.middleware.js";
@@ -12,7 +12,7 @@ export class BookRouter {
   _bookArchiveController;
 
   constructor(app) {
-    const router = express.Router();
+    const router = Router();
     this._bookController = getService("bookController", BookController);
     this._bookArchiveController = getService(
       "bookArchiveController",
@@ -23,7 +23,7 @@ export class BookRouter {
   }
 
   #configureRoutes(router) {
-    const bookRouter = express.Router();
+    const bookRouter = Router();
 
     bookRouter.post(
       "/",
