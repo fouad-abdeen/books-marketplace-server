@@ -130,20 +130,17 @@ export class BookService extends BaseService {
     } = book;
 
     if (!isNotEmpty(title) || !maxLength(title, 150))
-      throwError(
-        "Title cannot be empty and cannot be longer than 150 characters",
-        400
-      );
+      throwError("Title is required and should not exceed 150 characters", 400);
 
     if (!isNotEmpty(description) || !maxLength(description, 500))
       throwError(
-        "Description cannot be empty and cannot be longer than 500 characters",
+        "Description is required and should not exceed 500 characters",
         400
       );
 
     if (!isNotEmpty(author) || !maxLength(author, 100))
       throwError(
-        "Author cannot be empty and cannot be longer than 100 characters",
+        "Author's name is required and should not exceed 100 characters",
         400
       );
 
@@ -152,7 +149,7 @@ export class BookService extends BaseService {
     if (!genreExists) throwError("Genre not found", 404);
 
     if (!isNumber(price) || price <= 0) throwError("Invalid price", 400);
-    if (price > 100) throwError("Price cannot be higher than $100", 400);
+    if (price > 100) throwError("Price should not exceed $100", 400);
 
     if (typeof availability !== "boolean")
       throwError("Invalid availability value", 400);
@@ -160,7 +157,7 @@ export class BookService extends BaseService {
     if (!isNumber(stock) || stock < 0) throwError("Invalid stock", 400);
 
     if (publisher && !maxLength(publisher, 150))
-      throwError("Publisher cannot be longer than 150 characters", 400);
+      throwError("Publisher's name should not exceed 150 characters", 400);
 
     this.#validatePublicationYear(publicationYear);
   }
@@ -180,7 +177,7 @@ export class BookService extends BaseService {
 
     if (title !== undefined && (!isNotEmpty(title) || !maxLength(title, 150)))
       throwError(
-        "Title cannot be empty and cannot be longer than 150 characters",
+        "Title cannot be empty and should not exceed 150 characters",
         400
       );
 
@@ -189,7 +186,7 @@ export class BookService extends BaseService {
       (!isNotEmpty(description) || !maxLength(description, 500))
     )
       throwError(
-        "Description cannot be empty and cannot be longer than 500 characters",
+        "Description cannot be empty and should not exceed 500 characters",
         400
       );
 
@@ -198,7 +195,7 @@ export class BookService extends BaseService {
       (!isNotEmpty(author) || !maxLength(author, 100))
     )
       throwError(
-        "Author cannot be empty and cannot be longer than 100 characters",
+        "Author cannot be empty and should not exceed 100 characters",
         400
       );
 
@@ -219,7 +216,7 @@ export class BookService extends BaseService {
       throwError("Invalid stock", 400);
 
     if (publisher && !maxLength(publisher, 150))
-      throwError("Publisher cannot be longer than 150 characters", 400);
+      throwError("Publisher's name should not exceed 150 characters", 400);
 
     this.#validatePublicationYear(publicationYear);
   }

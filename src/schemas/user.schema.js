@@ -11,6 +11,15 @@ const userSchema = new mongoose.Schema(
       enum: Object.values(userRole),
       required: true,
     },
+    customerInfo: {
+      type: {
+        firstName: { type: String, required: true },
+        lastName: { type: String, required: true },
+        phone: { type: String, required: true },
+        address: { type: String, required: true },
+      },
+      default: null,
+    },
     isVerified: { type: Boolean, default: false },
     tokensDenylist: { type: [{ token: String, expiry: Number }], default: [] },
     passwordUpdatedAt: { type: Number, default: +new Date() },

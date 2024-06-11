@@ -148,7 +148,7 @@ export class AuthService extends BaseService {
 
     if (userSignupData.isBookstoreOwner)
       userSignupData.role = userRole.BOOKSTORE_OWNER;
-    else userSignupData.role = userRole.USER;
+    else userSignupData.role = userRole.CUSTOMER;
 
     this.setRequestId();
     this._logger.info(
@@ -454,32 +454,6 @@ export class AuthService extends BaseService {
     });
   }
 
-  async updatePassword({ currentPassword, newPassword, terminateAllSessions }) {
-    const user = Context.getUser();
-
-    this.setRequestId();
-    this._logger.info(
-      `Attempting to update password for user with id ${user._id}`
-    );
-
-    const passwordMatch = await this._hashService.verifyPassword(
-      currentPassword,
-      user.password
-    );
-    if (!passwordMatch) throw new Error("Current password is incorrect");
-
-    const hashedPassword = await this._hashService.hashPassword(newPassword);
-
-    this._logger.info(`Updating password for user with id ${user._id}`);
-
-    await this._userRepository.updateUser({
-      _id: user._id,
-      password: hashedPassword,
-      // If terminateAllSessions is true, update the passwordUpdatedAt field to invalidate all previous sessions
-      ...(terminateAllSessions ? { passwordUpdatedAt: +new Date() } : {}),
-    });
-  }
-
   #refreshAccessToken(refreshToken) {
     let identityId = "",
       email = "",
@@ -556,13 +530,10 @@ export class AuthService extends BaseService {
   #validateSignupRequest(signupRequest) {
     const errors = [];
 
-    if (!isEmail(signupRequest.email))
-      errors.push("Invalid or missing email address");
+    if (!isEmail(signupRequest.email)) errors.push("Invalid email address");
 
     if (!isNotEmpty(signupRequest.name) || !maxLength(signupRequest.name, 50))
-      errors.push(
-        "Name cannot be empty and cannot be longer than 50 characters"
-      );
+      errors.push("Name is required and should not exceed 50 characters");
 
     // Add your own logic to validate password strength
     if (

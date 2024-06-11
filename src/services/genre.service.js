@@ -1,5 +1,4 @@
 import { fileURLToPath } from "url";
-import { Context } from "../core/context.js";
 import { BaseService } from "../core/base.service.js";
 import { throwError } from "../core/utils/error.js";
 import { getService } from "../core/config/container.config.js";

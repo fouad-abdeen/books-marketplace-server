@@ -134,34 +134,29 @@ export class BookstoreService extends BaseService {
     } = bookstore;
 
     if (!isNotEmpty(name) || !maxLength(name, 50))
-      throwError(
-        "Name cannot be empty and cannot be longer than 50 characters",
-        400
-      );
+      throwError("Name is required and should not exceed 50 characters", 400);
 
     if (!isNotEmpty(description) || !maxLength(description, 500))
       throwError(
-        "Description cannot be empty and cannot be longer than 500 characters",
+        "Description is required and should not exceed 500 characters",
         400
       );
 
     if (!isNotEmpty(phone) || !isPhoneNumber(phone))
       throwError(
-        "Invalid or missing phone number. Please provide a valid phone number with country code",
+        "Invalid phone number. Please provide a valid phone number with country code",
         400
       );
 
-    if (!isNumber(shippingRate))
-      throwError("Invalid or missing shipping rate", 400);
+    if (!isNumber(shippingRate)) throwError("Invalid shipping rate", 400);
 
-    if (!isNotEmpty(address) || !maxLength(address, 250))
+    if (!isNotEmpty(address) || !maxLength(address, 150))
       throwError(
-        "Address cannot be empty and cannot be longer than 250 characters",
+        "Address is required and should not exceed 150 characters",
         400
       );
 
-    if (email && !isEmail(email))
-      throwError("Invalid or missing email address", 400);
+    if (email && !isEmail(email)) throwError("Invalid email address", 400);
 
     if (socialmedia) {
       if (socialmedia.facebook && !isURL(socialmedia.facebook))
@@ -191,7 +186,7 @@ export class BookstoreService extends BaseService {
 
     if (name !== undefined && (!isNotEmpty(name) || !maxLength(name, 50)))
       throwError(
-        "Name cannot be empty and cannot be longer than 50 characters",
+        "Name cannot be empty and should not exceed 50 characters",
         400
       );
 
@@ -200,30 +195,29 @@ export class BookstoreService extends BaseService {
       (!isNotEmpty(description) || !maxLength(description, 500))
     )
       throwError(
-        "Description cannot be empty and cannot be longer than 500 characters",
+        "Description cannot be empty and should not exceed 500 characters",
         400
       );
 
     if (phone !== undefined && (!isNotEmpty(phone) || !isPhoneNumber(phone)))
       throwError(
-        "Invalid or missing phone number. Please provide a valid phone number with country code",
+        "Invalid phone number. Please provide a valid phone number with country code",
         400
       );
 
     if (shippingRate !== undefined && !isNumber(shippingRate))
-      throwError("Invalid or missing shipping rate", 400);
+      throwError("Invalid shipping rate", 400);
 
     if (
       address !== undefined &&
-      (!isNotEmpty(address) || !maxLength(address, 250))
+      (!isNotEmpty(address) || !maxLength(address, 150))
     )
       throwError(
-        "Address cannot be empty and cannot be longer than 250 characters",
+        "Address cannot be empty and should not exceed 150 characters",
         400
       );
 
-    if (email && !isEmail(email))
-      throwError("Invalid or missing email address", 400);
+    if (email && !isEmail(email)) throwError("Invalid email address", 400);
 
     if (socialmedia) {
       if (socialmedia.facebook && !isURL(socialmedia.facebook))

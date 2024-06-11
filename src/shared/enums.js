@@ -4,9 +4,9 @@ export { mailTemplateType } from "../core/services/notification/mail/mail.servic
  * @enum {string}
  */
 export const userRole = {
-  BOOKSTORE_OWNER: "bookstore_owner",
-  USER: "user",
   ADMIN: "admin",
+  BOOKSTORE_OWNER: "bookstore_owner",
+  CUSTOMER: "customer",
 };
 
 /**

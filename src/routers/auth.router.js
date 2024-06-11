@@ -51,9 +51,9 @@ export class AuthRouter {
      *               name:
      *                 type: string
      *                 description: The user's name
-     *               role:
-     *                 type: string
-     *                 description: The user's role
+     *               isBookstoreOwner:
+     *                 type: boolean
+     *                 description: Whether the user is a bookstore owner
      *     responses:
      *       201:
      *         description: Successfully created
@@ -184,67 +184,6 @@ export class AuthRouter {
      *         description: Password reset successfully
      */
     authRouter.post("/password", this._authController.resetPassword);
-
-    /**
-     * @swagger
-     * /auth/password:
-     *   put:
-     *     tags:
-     *       - Auth
-     *     summary:  Update a user's password
-     *     security:
-     *       - BearerAuth: []
-     *     requestBody:
-     *       required: true
-     *       content:
-     *         application/json:
-     *           schema:
-     *             type: object
-     *             required:
-     *               - currentPassword
-     *               - newPassword
-     *             properties:
-     *               currentPassword:
-     *                 type: string
-     *                 description: The current password
-     *               newPassword:
-     *                 type: string
-     *                 description: The new password
-     *               terminateAllSessions:
-     *                 type: boolean
-     *                 description: Whether to terminate all sessions
-     *     responses:
-     *       200:
-     *         description: Password updated successfully
-     */
-    authRouter.put(
-      "/password",
-      authMiddleware.authorize(),
-      this._authController.updatePassword
-    );
-
-    /**
-     * @swagger
-     * /auth/user:
-     *   get:
-     *     tags:
-     *       - Auth
-     *     summary: Get authenticated user's info
-     *     security:
-     *       - BearerAuth: []
-     *     responses:
-     *       200:
-     *         description: User info
-     *         content:
-     *           application/json:
-     *             schema:
-     *               $ref: '#/components/schemas/User'
-     */
-    authRouter.get(
-      "/user",
-      authMiddleware.authorize(),
-      this._authController.getAuthenticatedUser
-    );
 
     router.use("/", authRouter);
   }
