@@ -1,0 +1,9 @@
+{
+  "events": {
+    "restart": "SIGUSR2"
+  },
+  "watch": ["src"],
+  "ext": ".js",
+  "ignore": [],
+  "exec": "npm start"
+}
