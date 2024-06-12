@@ -2,16 +2,18 @@ import { Router } from "express";
 import { getService } from "../core/config/container.config.js";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
 import { bookstoreMiddleware } from "../middlewares/bookstore.middleware.js";
+import { uploadedFileMiddleware } from "../middlewares/uploaded-file.middleware.js";
 import { BookstoreController } from "../controllers/bookstore.controller.js";
 import { BookController } from "../controllers/book.controller.js";
 import { GenreController } from "../controllers/genre.controller.js";
+import { OrderController } from "../controllers/order.controller.js";
 import { userRole } from "../shared/enums.js";
-import { uploadedFileMiddleware } from "../middlewares/uploaded-file.middleware.js";
 
 export class BookstoreRouter {
   _bookstoreController;
-  _bookController;
   _genreController;
+  _bookController;
+  _orderControllers;
 
   constructor(app) {
     const router = Router();
@@ -19,8 +21,9 @@ export class BookstoreRouter {
       "bookstoreController",
       BookstoreController
     );
-    this._bookController = getService("bookController", BookController);
     this._genreController = getService("genreController", GenreController);
+    this._bookController = getService("bookController", BookController);
+    this._orderController = getService("orderController", OrderController);
     this.#configureRoutes(router);
     app.use("/bookstores", router);
   }
@@ -28,6 +31,7 @@ export class BookstoreRouter {
   #configureRoutes(router) {
     const bookstoreRouter = Router();
 
+    // #region Private Routes
     bookstoreRouter.post(
       "/",
       authMiddleware.authorize({
@@ -77,6 +81,7 @@ export class BookstoreRouter {
       bookstoreMiddleware.checkBookstore(true),
       this._bookstoreController.deleteBookstoreLogo
     );
+    // #endregion
 
     bookstoreRouter.get(
       "/all",
@@ -93,14 +98,47 @@ export class BookstoreRouter {
     );
 
     bookstoreRouter.get(
+      "/:id/genres",
+      this._genreController.getBookstoreGenres
+    );
+
+    bookstoreRouter.get(
       "/:id/books",
       this._bookController.getListOfBookstoreBooks
     );
 
+    //#region Orders' Routes
     bookstoreRouter.get(
-      "/:id/genres",
-      this._genreController.getBookstoreGenres
+      "/orders",
+      authMiddleware.authorize({
+        roles: [userRole.BOOKSTORE_OWNER],
+        disclaimer:
+          "You must be a bookstore owner to get your bookstore orders",
+      }),
+      bookstoreMiddleware.checkBookstore(),
+      this._orderController.getAllOrders
     );
+
+    bookstoreRouter.get(
+      "/orders/:id",
+      authMiddleware.authorize({
+        roles: [userRole.BOOKSTORE_OWNER],
+        disclaimer: "You must be authorized to view this order",
+      }),
+      bookstoreMiddleware.checkBookstore(),
+      this._orderController.getOrder
+    );
+
+    bookstoreRouter.patch(
+      "/orders/:orderId",
+      authMiddleware.authorize({
+        roles: [userRole.BOOKSTORE_OWNER],
+        disclaimer: "You must be a bookstore owner to update an order status",
+      }),
+      bookstoreMiddleware.checkBookstore(),
+      this._orderController.updateOrderStatus
+    );
+    // #endregion
 
     bookstoreRouter.get("/:id", this._bookstoreController.getBookstoreById);
 

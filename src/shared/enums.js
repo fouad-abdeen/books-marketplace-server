@@ -18,3 +18,15 @@ export const authTokenType = {
   EMAIL_VERIFICATION_TOKEN: "Email Verification Token",
   PASSWORD_RESET_TOKEN: "Password Reset Token",
 };
+
+/**
+ * @enum {string}
+ */
+export const orderStatus = {
+  PENDING: "pending",
+  ACCEPTED: "accepted",
+  REJECTED: "rejected",
+  PROCESSING: "processing",
+  COMPLETED: "completed",
+  CANCELLED: "cancelled",
+};

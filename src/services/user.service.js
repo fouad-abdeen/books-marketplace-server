@@ -48,11 +48,11 @@ export class UserService extends BaseService {
 
   async updateCustomerInfo(customerInfo) {
     const { _id } = Context.getUser();
-    this.#validateCustomerInfo(customerInfo);
+    this.validateCustomerInfo(customerInfo);
     return await this._userRepository.updateUser({ _id, customerInfo });
   }
 
-  #validateCustomerInfo(customerInfo) {
+  validateCustomerInfo(customerInfo) {
     const { firstName, lastName, phone, address } = customerInfo;
 
     if (

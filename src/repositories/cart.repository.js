@@ -76,6 +76,7 @@ export class CartRepository extends BaseService {
       {
         $group: {
           _id: "$_id",
+          bookstore: { $first: "$bookstore" },
           user: { $first: "$user" },
           books: {
             $push: {
