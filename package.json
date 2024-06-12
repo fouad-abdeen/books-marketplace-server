@@ -6,6 +6,7 @@
   "scripts": {
     "start": "babel-node ./src/main.js",
     "build": "babel src -d build",
+    "postbuild": "node ./scripts/addMailTemplatesToBuild.js",
     "serve": "node build/main.js",
     "dev": "nodemon"
   },

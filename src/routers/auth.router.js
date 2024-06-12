@@ -62,7 +62,7 @@ export class AuthRouter {
      *     tags:
      *       - Auth
      *     summary: Log in a user
-     *     description: Note: Access and refresh tokens are stored in cookies after successful login.
+     *     description: N.B. Access and refresh tokens are stored in cookies after successful login.
      *     requestBody:
      *       required: true
      *       content:
