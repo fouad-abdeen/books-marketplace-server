@@ -11,46 +11,6 @@ export class UserRouter {
     const router = Router();
     this._userController = getService("userController", UserController);
     this.#configureRoutes(router);
-
-    /**
-     * @swagger
-     * components:
-     *   schemas:
-     *     User:
-     *       type: object
-     *       properties:
-     *         _id:
-     *           type: string
-     *           description: The user's id
-     *         email:
-     *           type: string
-     *           description: The user's email
-     *         name:
-     *           type: string
-     *           description: The user's name
-     *         role:
-     *           type: string
-     *           enum: ["admin", "bookstore_owner", "customer"]
-     *           description: The user's role
-     *         isEmailVerified:
-     *           type: boolean
-     *           description: Whether the user's email is verified
-     *         customerInfo:
-     *           type: object
-     *           properties:
-     *             firstName:
-     *               type: string
-     *               description: The customer's first name
-     *             lastName:
-     *               type: string
-     *               description: The customer's last name
-     *             phone:
-     *               type: string
-     *               description: The customer's phone number
-     *             address:
-     *               type: string
-     *               description: The customer's address
-     */
     app.use("/users", router);
   }
 
@@ -62,7 +22,7 @@ export class UserRouter {
      * /users:
      *   get:
      *     tags:
-     *       - User
+     *       - Users
      *     summary: Get authenticated user's info
      *     security:
      *       - BearerAuth: []
@@ -85,7 +45,7 @@ export class UserRouter {
      * /users/password:
      *   patch:
      *     tags:
-     *       - User
+     *       - Users
      *     summary:  Update a user's password
      *     security:
      *       - BearerAuth: []
@@ -123,7 +83,7 @@ export class UserRouter {
      * /users/customer-info:
      *   patch:
      *     tags:
-     *       - User
+     *       - Users - Customer
      *     summary: Update a customer's information
      *     security:
      *       - BearerAuth: []
@@ -168,6 +128,45 @@ export class UserRouter {
       this._userController.updateCustomerInfo
     );
 
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     User:
+     *       type: object
+     *       properties:
+     *         _id:
+     *           type: string
+     *           description: The user's id
+     *         email:
+     *           type: string
+     *           description: The user's email
+     *         name:
+     *           type: string
+     *           description: The user's name
+     *         role:
+     *           type: string
+     *           enum: ["admin", "bookstore_owner", "customer"]
+     *           description: The user's role
+     *         isEmailVerified:
+     *           type: boolean
+     *           description: Whether the user's email is verified
+     *         customerInfo:
+     *           type: object
+     *           properties:
+     *             firstName:
+     *               type: string
+     *               description: The customer's first name
+     *             lastName:
+     *               type: string
+     *               description: The customer's last name
+     *             phone:
+     *               type: string
+     *               description: The customer's phone number
+     *             address:
+     *               type: string
+     *               description: The customer's address
+     */
     router.use("/", userRouter);
   }
 }

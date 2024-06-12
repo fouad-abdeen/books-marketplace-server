@@ -39,10 +39,13 @@ export class GenreController extends BaseService {
       this._logger.info(
         `Received a request to update a genre with id: ${req.params.id}`
       );
-      const updatedGenre = await this._genreService.updateGenre({
-        _id: req.params.id,
-        bookstore: req.bookstoreId,
-      });
+      const updatedGenre = await this._genreService.updateGenre(
+        {
+          _id: req.params.id,
+          bookstore: req.bookstoreId,
+        },
+        req.body.name
+      );
       res.status(200).json(updatedGenre);
     } catch (error) {
       next(error);
@@ -59,7 +62,7 @@ export class GenreController extends BaseService {
         _id: req.params.id,
         bookstore: req.bookstoreId,
       });
-      res.status(204).send();
+      res.status(200).json(null);
     } catch (error) {
       next(error);
     }

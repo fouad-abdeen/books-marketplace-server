@@ -49,7 +49,7 @@ export class BookRepository extends BaseService {
     this.setRequestId();
     this._logger.info(`Getting book by query: ${JSON.stringify(query)}`);
     return await this._model
-      .findById(query)
+      .findOne(query)
       .populate({
         path: "cover",
         match: { _id: { $ne: null } },

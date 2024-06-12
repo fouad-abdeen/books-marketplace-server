@@ -6,9 +6,8 @@ import { env } from "../config/env.config.js";
  * @param {Logger} log logger instance
  */
 export function displayBanner(log) {
-  const route = `${env.app.schema}://${env.app.host}:${env.app.port}`;
   log.info("-------------------------------------------------------");
-  log.info(`The app is ready on ${route}${env.app.routePrefix}`);
+  log.info(`The app is ready on ${env.app.url}`);
   log.info(`To shut it down, press <CTRL> + C at any time.`);
   log.info(``);
   log.info("-------------------------------------------------------");
@@ -16,7 +15,7 @@ export function displayBanner(log) {
   log.info(`Environment  : ${env.nodeEnv}`);
   log.info(`Version      : ${env.app.version}`);
   log.info(``);
-  log.info(`Health API   : ${route}${env.app.routePrefix}/health`);
-  log.info(`Docs API     : ${route}${env.app.routePrefix}/docs`);
+  log.info(`Health API   : ${env.app.url}/health`);
+  log.info(`Docs API     : ${env.app.url}/docs`);
   log.info("-------------------------------------------------------\n");
 }

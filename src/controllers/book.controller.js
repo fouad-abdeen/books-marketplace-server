@@ -72,7 +72,7 @@ export class BookController extends BaseService {
     try {
       this.setRequestId();
       this._logger.info("Received a request to get a book by ID");
-      const book = await this._bookService.getBookById(req.params.id);
+      const book = await this._bookRepository.getBook({ _id: req.params.id });
       res.status(200).json(book);
     } catch (error) {
       next(error);

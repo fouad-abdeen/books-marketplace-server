@@ -8,15 +8,6 @@ export class AuthRouter {
   constructor(app) {
     const router = Router();
     this._authController = new AuthController();
-    // /**
-    //  * @swagger
-    //  * components:
-    //  *   securitySchemes:
-    //  *     BearerAuth:
-    //  *       type: http
-    //  *       scheme: bearer
-    //  *       bearerFormat: JWT
-    //  */
     this.#configureRoutes(router);
     app.use("/auth", router);
   }
@@ -71,6 +62,7 @@ export class AuthRouter {
      *     tags:
      *       - Auth
      *     summary: Log in a user
+     *     description: Note: Access and refresh tokens are stored in cookies after successful login.
      *     requestBody:
      *       required: true
      *       content:

@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: `${env.app.schema}://${env.app.host}:${env.app.port}`,
+        url: `${env.app.url}`,
       },
     ],
   },

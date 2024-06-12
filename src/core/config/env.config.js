@@ -41,6 +41,7 @@ export const env = {
       "APP_DESCRIPTION",
       "Welcome to Souk el Kotob API!"
     ),
+    url: getEnvVariable("APP_URL", "http://localhost:3030"),
     schema: getEnvVariable("APP_SCHEMA", "http"),
     host: getEnvVariable("APP_HOST", "localhost"),
     port: getEnvVariable("APP_PORT", "3030"),

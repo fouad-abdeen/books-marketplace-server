@@ -18,6 +18,32 @@ export class GenreRouter {
   #configureRoutes(router) {
     const genreRouter = Router();
 
+    /**
+     * @swagger
+     * /genres:
+     *   post:
+     *     summary: Create a new genre
+     *     tags:
+     *       - Genres -  Bookstore Owner
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *     responses:
+     *       201:
+     *         description: The genre was successfully created
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Genre'
+     */
     genreRouter.post(
       "/",
       authMiddleware.authorize({
@@ -28,6 +54,39 @@ export class GenreRouter {
       this._genreController.createGenre
     );
 
+    /**
+     * @swagger
+     * /genres/{id}:
+     *   patch:
+     *     summary: Update a genre
+     *     tags:
+     *       - Genres -  Bookstore Owner
+     *     security:
+     *       - bearerAuth: []
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The genre id
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               name:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: The genre was successfully updated
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/Genre'
+     */
     genreRouter.patch(
       "/:id",
       authMiddleware.authorize({
@@ -38,6 +97,26 @@ export class GenreRouter {
       this._genreController.updateGenre
     );
 
+    /**
+     * @swagger
+     * /genres/{id}:
+     *   delete:
+     *     summary: Delete a genre
+     *     tags:
+     *       - Genres -  Bookstore Owner
+     *     security:
+     *       - bearerAuth: []
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         schema:
+     *           type: string
+     *         required: true
+     *         description: The genre id
+     *     responses:
+     *       200:
+     *         description: The genre was successfully deleted
+     */
     genreRouter.delete(
       "/:id",
       authMiddleware.authorize({
@@ -48,6 +127,26 @@ export class GenreRouter {
       this._genreController.deleteGenre
     );
 
+    /**
+     * @swagger
+     * components:
+     *   schemas:
+     *     Genre:
+     *       type: object
+     *       properties:
+     *         bookstore:
+     *           type: string
+     *         name:
+     *           type: string
+     *         _id:
+     *           type: string
+     *         createdAt:
+     *           type: string
+     *           format: date-time
+     *         updatedAt:
+     *           type: string
+     *           format: date-time
+     */
     router.use("/", genreRouter);
   }
 }
