@@ -265,10 +265,7 @@ export class BookstoreRouter {
      *               items:
      *                 $ref: '#/components/schemas/Genre'
      */
-    bookstoreRouter.get(
-      "/:id/genres",
-      this._genreController.getBookstoreGenres
-    );
+    bookstoreRouter.get("/:id/genres", this._genreController.getAllGenres);
 
     /**
      * @swagger
@@ -284,6 +281,24 @@ export class BookstoreRouter {
      *           type: string
      *         required: true
      *         description: The bookstore ID
+     *       - in: query
+     *         name: genre
+     *         schema:
+     *           type: string
+     *         required: false
+     *         description: Filter books by genre
+     *       - in: query
+     *         name: lastDocumentId
+     *         schema:
+     *           type: string
+     *         required: false
+     *         description: The ID of the last document from the previous query, for pagination
+     *       - in: query
+     *         name: limit
+     *         schema:
+     *           type: integer
+     *         required: false
+     *         description: Maximum number of books to return
      *     responses:
      *       200:
      *         description: List of books

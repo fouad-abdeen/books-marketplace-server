@@ -83,7 +83,7 @@ export class BookController extends BaseService {
     try {
       this.setRequestId();
       this._logger.info("Received a request to get books from a bookstore");
-      const query = { bookstore: req.params.bookstore };
+      const query = { bookstore: req.params.id };
       if (req.query.genre) query.genre = req.query.genre;
       const pagination = {
         lastDocumentId: req.query.lastDocumentId,

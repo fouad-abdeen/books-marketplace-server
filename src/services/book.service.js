@@ -41,7 +41,19 @@ export class BookService extends BaseService {
     await this.#validateBookUpdate(data);
     const book = await this._bookRepository.getBook(query);
     const updatedBook = await this._bookRepository.updateBook(query, data);
-    await this._bookArchiveRepository.createBookArchive(book);
+    await this._bookArchiveRepository.createBookArchive({
+      bookstore: book.bookstore,
+      book: book._id,
+      title: book.title,
+      description: book.description,
+      author: book.author,
+      genre: book.genre,
+      price: book.price,
+      availability: book.availability,
+      stock: book.stock,
+      publisher: book.publisher,
+      publicationYear: book.publicationYear,
+    });
     return updatedBook;
   }
 

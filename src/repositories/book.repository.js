@@ -51,6 +51,10 @@ export class BookRepository extends BaseService {
     return await this._model
       .findOne(query)
       .populate({
+        path: "genre",
+        select: "name",
+      })
+      .populate({
         path: "cover",
         match: { _id: { $ne: null } },
         select: "key url",
@@ -72,6 +76,10 @@ export class BookRepository extends BaseService {
         ...(pagination.lastDocumentId
           ? { _id: { $lt: pagination.lastDocumentId } }
           : {}),
+      })
+      .populate({
+        path: "genre",
+        select: "name",
       })
       .populate({
         path: "cover",

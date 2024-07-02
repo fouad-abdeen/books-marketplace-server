@@ -372,7 +372,7 @@ export class AuthService extends BaseService {
     if (!user.isVerified) throwError(`${email} is not verified`, 403);
 
     const id = user._id.toString();
-    const name = user.firstName;
+    const name = user.name;
 
     const passwordResetToken = this._tokenService.generateToken(
       {
@@ -407,6 +407,20 @@ export class AuthService extends BaseService {
 
     this.setRequestId();
     this._logger.info("Attempting to reset password");
+
+    if (
+      !isStrongPassword(password, {
+        minLength: 8,
+        minLowercase: 1,
+        minUppercase: 1,
+        minNumbers: 1,
+        minSymbols: 1,
+      })
+    )
+      throwError(
+        "Weak password. Password should contain at least 8 characters, 1 lowercase, 1 uppercase, 1 number and 1 symbol",
+        400
+      );
 
     // #region Verify Token
     try {

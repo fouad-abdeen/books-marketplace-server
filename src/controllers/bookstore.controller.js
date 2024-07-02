@@ -115,7 +115,7 @@ export class BookstoreController extends BaseService {
     try {
       this.setRequestId();
       this._logger.info("Received a request to get a bookstore");
-      const bookstore = await this._bookstoreRepository.getOneBookstore({
+      const bookstore = await this._bookstoreRepository.getBookstore({
         _id: req.params.id,
       });
       res.status(200).json(bookstore);

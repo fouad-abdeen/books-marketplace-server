@@ -70,7 +70,7 @@ export class GenreController extends BaseService {
 
   async getBookstoreGenres(req, res, next) {
     try {
-      const bookstoreId = req.bookstoreId;
+      const bookstoreId = req.params.id;
       this.setRequestId();
       this._logger.info(
         `Received a request to get genres of bookstore with id: ${bookstoreId}`

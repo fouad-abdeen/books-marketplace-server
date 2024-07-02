@@ -19,16 +19,13 @@ export class BookArchiveRepository extends BaseService {
     );
   }
 
-  async createBookArchive(book) {
+  async createBookArchive(archive) {
     this.setRequestId();
-    this._logger.info(`Creating book archive for book with id: ${book._id}`);
-
-    book.book = book._id;
-    delete book._id;
-    delete book.image;
-
-    const bookArchive = (await this._model.create(book)).toObject();
-    await this.#updateBookArchives(book);
+    this._logger.info(
+      `Creating book archive for book with id: ${archive.book}`
+    );
+    const bookArchive = (await this._model.create(archive)).toObject();
+    await this.#updateBookArchives(archive.book);
     return bookArchive;
   }
 
@@ -51,11 +48,11 @@ export class BookArchiveRepository extends BaseService {
 
   async #updateBookArchives(book) {
     this.setRequestId();
-    this._logger.info(`Updating archives for book with id: ${book._id}`);
+    this._logger.info(`Updating archives for book with id: ${book}`);
 
     // Skip the first 'archivesLimitPerBook' documents and get the rest
     const archives = await this._model
-      .find({ book: book._id }, "_id")
+      .find({ book }, "_id")
       .sort({ _id: -1 })
       .skip(this._archivesLimitPerBook)
       .lean()

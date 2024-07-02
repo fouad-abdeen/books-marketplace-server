@@ -7,7 +7,7 @@ const bookArchiveSchema = new Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     author: { type: String, required: true },
-    genre: { type: String, ref: "Genre", required: true },
+    genre: { type: Object, required: true },
     price: { type: Number, required: true },
     availability: { type: Boolean, required: true },
     stock: { type: Number, required: true },
