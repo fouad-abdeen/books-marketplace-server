@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Order Summary from Souk el Kotob</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        text-align: center;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: auto;
+        background: #f9f9f9;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        color: #444;
+      }
+      .order-details {
+        text-align: left;
+        margin-top: 20px;
+      }
+      .order-details th,
+      .order-details td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      .total {
+        text-align: right;
+        margin-top: 20px;
+      }
+      .footer {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 0.9em;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Order Summary</h1>
+      <p>Thank you for your purchase, {{USER_NAME}}!</p>
+      <div class="order-details">
+        <table width="100%">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ORDER_ITEMS}}
+          </tbody>
+        </table>
+      </div>
+      <div class="total">
+        <strong> Shipping Rate: ${{SHIPPING_RATE}} </strong> <br />
+        <strong>Total: ${{ORDER_TOTAL}}</strong>
+      </div>
+      <p>
+        Your order will be shipped to: <br />
+        <strong>Name:</strong> {{CUSTOMER_NAME}}<br />
+        <strong>Phone:</strong> {{CUSTOMER_PHONE}}<br />
+        <strong>Address:</strong> {{CUSTOMER_ADDRESS}}
+      </p>
+      <p>
+        If you have any questions, please contact us at
+        <a href="mailto:support@soukelkotob.com">support@soukelkotob.com</a>.
+      </p>
+      <div class="footer">
+        <p>Souk el Kotob</p>
+      </div>
+    </div>
+  </body>
+</html>

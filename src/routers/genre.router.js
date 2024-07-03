@@ -59,6 +59,7 @@ export class GenreRouter {
      * /genres/{id}:
      *   patch:
      *     summary: Update a genre
+     *     deprecated: True
      *     tags:
      *       - Genres -  Bookstore Owner
      *     security:

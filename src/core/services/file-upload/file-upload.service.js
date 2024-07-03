@@ -159,7 +159,7 @@ export class FileUploadService extends BaseService {
     const fileInfo = {
       url:
         (this._endpoint ?? `s3-${this._region}.amazonaws.com`) +
-        `/${bucket}/${fileKey}`,
+        `/${bucket}/${fileKey}?v=${Date.now()}`,
       key: fileKey,
     };
 

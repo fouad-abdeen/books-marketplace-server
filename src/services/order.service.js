@@ -9,10 +9,11 @@ import { OrderRepository } from "../repositories/order.repository.js";
 import { CartRepository } from "../repositories/cart.repository.js";
 import { BookRepository } from "../repositories/book.repository.js";
 import { BookstoreRepository } from "../repositories/bookstore.repository.js";
-import { orderStatus } from "../shared/enums.js";
+import { mailTemplateType, orderStatus } from "../shared/enums.js";
 
 export class OrderService extends BaseService {
   _userService;
+  _mailService;
   _orderRepository;
   _cartRepository;
   _bookRepository;
@@ -22,6 +23,7 @@ export class OrderService extends BaseService {
     const __filename = fileURLToPath(import.meta.url);
     super(__filename);
     this._userService = getService("userService", UserService);
+    this._mailService = getService("mailService");
     this._orderRepository = getService("orderRepository", OrderRepository);
     this._cartRepository = getService("cartRepository", CartRepository);
     this._bookRepository = getService("bookRepository", BookRepository);
@@ -32,7 +34,7 @@ export class OrderService extends BaseService {
   }
 
   async placeOrder(shippingInfo) {
-    const { _id, customerInfo } = Context.getUser();
+    const { _id, customerInfo, name, email } = Context.getUser();
     this.#validateCustomerInfo(shippingInfo ?? customerInfo);
 
     // Get the user's cart with books information
@@ -63,6 +65,31 @@ export class OrderService extends BaseService {
     await this._cartRepository.updateCart(
       { user: _id },
       { bookstore: null, books: [] }
+    );
+
+    this._logger.info(`Sending order summary mail to ${email}`);
+
+    await this._mailService.sendMail(
+      {
+        name,
+        email,
+      },
+      "Order Summary from Souk el Kotob",
+      this._mailService.parseMailTemplate(mailTemplateType.ORDER_SUMMARY, {
+        USER_NAME: name,
+        ORDER_ITEMS: order.books
+          .map(
+            (book) =>
+              `<tr><td>${book.title}</td><td>${book.quantity}</td><td>$${book.price}</td><td>$${book.totalPrice}</td></tr>`
+          )
+          .join(""),
+        SHIPPING_RATE: order.shippingRate,
+        ORDER_TOTAL: order.total,
+        CUSTOMER_NAME:
+          order.shippingInfo.firstName + " " + order.shippingInfo.lastName,
+        CUSTOMER_PHONE: order.shippingInfo.phone,
+        CUSTOMER_ADDRESS: order.shippingInfo.address,
+      })
     );
 
     return placedOrder;

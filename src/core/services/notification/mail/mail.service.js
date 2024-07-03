@@ -82,6 +82,7 @@ export class MailService extends BaseService {
 export const mailTemplateType = {
   EMAIL_VERIFICATION: "email-verification",
   PASSWORD_RESET: "password-reset",
+  ORDER_SUMMARY: "order-summary",
 };
 
 /**

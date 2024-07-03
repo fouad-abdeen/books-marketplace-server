@@ -46,7 +46,7 @@ export class BookstoreRouter {
      *       content:
      *         application/json:
      *           schema:
-     *             $ref: '#/components/schemas/Bookstore'
+     *             $ref: '#/components/schemas/BookstoreUpdate'
      *     responses:
      *       201:
      *         description: Bookstore created successfully
@@ -78,7 +78,7 @@ export class BookstoreRouter {
      *       content:
      *         application/json:
      *           schema:
-     *             $ref: '#/components/schemas/Bookstore'
+     *             $ref: '#/components/schemas/BookstoreUpdate'
      *     responses:
      *       200:
      *         description: Bookstore updated successfully
@@ -599,6 +599,44 @@ export class BookstoreRouter {
      *               nullable: true
      *         isActive:
      *           type: boolean
+     *
+     *     BookstoreUpdate:
+     *       type: object
+     *       required:
+     *         - name
+     *         - description
+     *         - phone
+     *         - shippingRate
+     *         - address
+     *         - email
+     *         - socialMedia
+     *       properties:
+     *         name:
+     *           type: string
+     *         description:
+     *           type: string
+     *         phone:
+     *           type: string
+     *           example: "+9613100900"
+     *         shippingRate:
+     *           type: number
+     *           example: 0
+     *         address:
+     *           type: string
+     *         email:
+     *           type: string
+     *           example: "strin@mg.co"
+     *         socialMedia:
+     *           type: object
+     *           properties:
+     *             facebook:
+     *               type: string
+     *             instagram:
+     *               type: string
+     *             twitter:
+     *               type: string
+     *             linkedIn:
+     *               type: string
      */
     router.use("/", bookstoreRouter);
   }
