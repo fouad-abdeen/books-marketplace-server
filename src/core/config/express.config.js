@@ -74,6 +74,7 @@ export class Express {
         arguments[0] = responseInterceptor.intercept(data);
         return oldJson.apply(res, arguments);
       };
+      res.header("Access-Control-Allow-Origin", env.frontend.url);
       next();
     });
 
